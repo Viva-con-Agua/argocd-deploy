@@ -1,0 +1,4 @@
+# add the --insecure flag to argocd servers startup parameters
+- op: add
+  path: /spec/template/spec/containers/0/command/-
+  value: "--insecure"

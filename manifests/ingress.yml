@@ -1,0 +1,52 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-http
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header "Content-Security-Policy" "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'";
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: ssl-argocd-server-http
+      hosts:
+        - argocd.vivaconagua.org
+  rules:
+    - host: argocd.vivaconagua.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: http
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-grpc
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: ssl-argocd-server-grpc
+      hosts:
+        - grpc.argocd.vivaconagua.org
+  rules:
+    - host: grpc.argocd.vivaconagua.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: https

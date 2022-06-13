@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: argocd
+commonLabels:
+  app.kubernetes.io/part-of: argocd
+generatorOptions:
+  disableNameSuffixHash: true
+
+resources:
+  - manifests/namespace.yml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.0/manifests/ha/install.yaml
+  - manifests/ingress.yml
+
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: argocd-server
+    path: manifests/argocd-server-insecure.patch.yml
+
+configMapGenerator:
+  - name: argocd-cm
+    behavior: merge
+    envs:
+      - config/argocd.env
+    files:
+      - dex.config=config/argocd.dex.yml
+
+  - name: argocd-rbac-cm
+    behavior: merge
+    envs:
+      - config/rbac.env
+    files:
+      - policy.csv=config/rbac.policy.csv
+
+secretGenerator:
+  - name: argocd-secret
+    behavior: merge
+    envs:
+      - config/argocd.secret.env
