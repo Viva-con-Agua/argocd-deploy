@@ -1,0 +1,11 @@
+# add a projected volume containing secret gpg keys
+- op: replace
+  path: /spec/template/spec/volumes/2
+  value:
+    name: gpg-keys
+    projected:
+      sources:
+        - secret:
+            name: argocd-gpg-secret-keys
+        - configMap:
+            name: argocd-gpg-keys-cm

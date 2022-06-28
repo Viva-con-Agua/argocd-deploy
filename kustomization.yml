@@ -8,8 +8,12 @@ generatorOptions:
 
 resources:
   - manifests/namespace.yml
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.0/manifests/ha/install.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.3/manifests/ha/install.yaml
   - manifests/ingress.yml
+
+generators:
+  - config/argocd-secret.yml
+  - config/secret-gpg-keys.yml
 
 patches:
   - target:
@@ -18,6 +22,16 @@ patches:
       kind: Deployment
       name: argocd-server
     path: manifests/argocd-server-insecure.patch.yml
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: argocd-repo-server
+    path: manifests/repo-server-kustomize-pass.patch.yml
+
+images:
+  - name: quay.io/argoproj/argocd
+    newName: ghcr.io/ftsell/argocd-kustomize-pass
 
 configMapGenerator:
   - name: argocd-cm
@@ -33,9 +47,3 @@ configMapGenerator:
       - config/rbac.env
     files:
       - policy.csv=config/rbac.policy.csv
-
-secretGenerator:
-  - name: argocd-secret
-    behavior: merge
-    envs:
-      - config/argocd.secret.env
