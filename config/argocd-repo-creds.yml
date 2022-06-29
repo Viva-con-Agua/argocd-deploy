@@ -1,0 +1,20 @@
+apiVersion: ftsell.de/v1beta1
+kind: PassSecret
+metadata:
+  name: argocd-github-creds
+  labels:
+    argocd.argoproj.io/secret-type: repo-creds
+  annotations:
+    config.kubernetes.io/function: |
+      exec:
+        path: kustomize-pass
+
+source:
+  url: https://github.com/Viva-con-Agua/pass.git
+data:
+  githubAppPrivateKey: services/basic-cluster/argocd/github-app-private-key.pem
+plainData:
+  url: https://github.com/Viva-con-Agua/
+  type: git
+  githubAppID: "208409"
+  githubAppInstallationID: "26321093"

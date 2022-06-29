@@ -14,6 +14,7 @@ resources:
 generators:
   - config/argocd-secret.yml
   - config/secret-gpg-keys.yml
+  - config/argocd-repo-creds.yml
 
 patches:
   - target:

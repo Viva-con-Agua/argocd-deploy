@@ -1,4 +1,4 @@
-# add a projected volume containing secret gpg keys
+# replace the existing gpg-keys volume definition to include secret gpg keys as well
 - op: replace
   path: /spec/template/spec/volumes/2
   value:
@@ -9,3 +9,11 @@
             name: argocd-gpg-secret-keys
         - configMap:
             name: argocd-gpg-keys-cm
+
+
+# set XDG_DATA_HOME so that kustomize-pass can clone repositories without running into the read-only filesystem error
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: XDG_DATA_HOME
+    value: /tmp/data
