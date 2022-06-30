@@ -11,9 +11,14 @@
             name: argocd-gpg-keys-cm
 
 
-# set XDG_DATA_HOME so that kustomize-pass can clone repositories without running into the read-only filesystem error
+# set environment variables so that kustomize-pass can correctly interact with secret repositories
 - op: add
   path: /spec/template/spec/containers/0/env/-
   value:
     name: XDG_DATA_HOME
     value: /tmp/data
+- op: add
+  path: /spec/template/spec/containers/0/env/-
+  value:
+    name: GNUPGHOME
+    value: /app/config/gpg/keys
