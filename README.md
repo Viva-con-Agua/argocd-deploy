@@ -1,5 +1,7 @@
 # Deployment configuration for ArgoCD
 
+![Deployment Status](https://argocd.vivaconagua.org/api/badge?name=argocd&revision=true)
+
 This repository consists of kubernetes manifests that deploy [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) on our infrastructure the way we want it to.
 
 It contains the following definitions:
