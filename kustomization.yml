@@ -30,6 +30,10 @@ patches:
       name: argocd-repo-server
     path: manifests/repo-server-kustomize-pass.patch.yml
 
+replicas:
+  - name: argocd-redis-ha-haproxy
+    count: 1
+
 images:
   - name: quay.io/argoproj/argocd
     newName: ghcr.io/ftsell/argocd-kustomize-pass
