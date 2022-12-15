@@ -8,7 +8,7 @@ generatorOptions:
 
 resources:
   - manifests/namespace.yml
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.14/manifests/ha/install.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.4/manifests/ha/install.yaml
   - manifests/ingress.yml
 
 generators:
