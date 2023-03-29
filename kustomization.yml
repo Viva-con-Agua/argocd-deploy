@@ -8,7 +8,7 @@ generatorOptions:
 
 resources:
   - manifests/namespace.yml
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.6/manifests/ha/install.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.5.6/manifests/install.yaml
   - manifests/ingress.yml
 
 generators:
@@ -30,10 +30,6 @@ patches:
       name: argocd-repo-server
     path: manifests/repo-server-kustomize-pass.patch.yml
 
-replicas:
-  - name: argocd-redis-ha-haproxy
-    count: 1
-
 images:
   - name: quay.io/argoproj/argocd
     newName: ghcr.io/ftsell/argocd-kustomize-pass
@@ -52,3 +48,4 @@ configMapGenerator:
       - config/rbac.env
     files:
       - policy.csv=config/rbac.policy.csv
+
