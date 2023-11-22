@@ -21,12 +21,6 @@ patches:
       group: apps
       version: v1
       kind: Deployment
-      name: argocd-server
-    path: manifests/argocd-server-insecure.patch.yml
-  - target:
-      group: apps
-      version: v1
-      kind: Deployment
       name: argocd-repo-server
     path: manifests/repo-server-kustomize-pass.patch.yml
 
@@ -41,6 +35,11 @@ configMapGenerator:
       - config/argocd.env
     files:
       - dex.config=config/argocd.dex.yml
+
+  - name: argocd-cmd-params-cm
+    behavior: merge
+    envs:
+      - config/argocd-params.env
 
   - name: argocd-rbac-cm
     behavior: merge
