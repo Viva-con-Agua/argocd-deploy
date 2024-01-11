@@ -23,6 +23,11 @@ patches:
       kind: Deployment
       name: argocd-repo-server
     path: manifests/repo-server-kustomize-pass.patch.yml
+  - target:
+      version: v1
+      kind: Service
+      name: argocd-metrics
+    path: manifests/add-prometheus-io-annotations.yml
 
 images:
   - name: quay.io/argoproj/argocd
