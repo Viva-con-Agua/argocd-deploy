@@ -28,6 +28,16 @@ patches:
       kind: Service
       name: argocd-metrics
     path: manifests/add-prometheus-io-annotations.yml
+  - target:
+      version: v1
+      kind: Deployment
+      name: argocd-applicationset-controller
+    path: manifests/imagepullpolicy.patch.yml
+  - target:
+      version: v1
+      kind: StatefulSet
+      name: argocd-application-controller
+    path: manifests/imagepullpolicy.patch.yml
 
 images:
   - name: quay.io/argoproj/argocd
