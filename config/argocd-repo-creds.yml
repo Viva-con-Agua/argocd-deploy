@@ -1,20 +1,34 @@
-apiVersion: ftsell.de/v1beta1
-kind: PassSecret
+apiVersion: secrets.infisical.com/v1alpha1
+kind: InfisicalSecret
 metadata:
   name: argocd-github-creds
   labels:
+    managed-by: "infisical-operator"
     argocd.argoproj.io/secret-type: repo-creds
   annotations:
-    config.kubernetes.io/function: |
-      exec:
-        path: kustomize-pass
-
-source:
-  url: https://github.com/Viva-con-Agua/pass.git
-data:
-  githubAppPrivateKey: services/basic-cluster/argocd/github-app-private-key.pem
-plainData:
-  url: https://github.com/Viva-con-Agua/
-  type: git
-  githubAppID: "208409"
-  githubAppInstallationID: "26321093"
+    argocd.argoproj.io/sync-options: Prune=false
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  hostAPI: https://infisical.vivaconagua.org/api
+  resyncInterval: 60
+  authentication:
+    kubernetesAuth:
+      identityId: 6f4af54c-d38f-4ee9-a5db-8980aa5d43d3
+      autoCreateServiceAccountToken: true
+      serviceAccountRef:
+        name: infisical-service-account
+        namespace: default
+      secretsScope:
+        projectSlug: basic-cluster-v-zty
+        envSlug: prod
+        secretsPath: "/argocd"
+  managedKubeSecretReferences:
+    - secretName: argocd-github-creds
+      secretNamespace: argocd
+      template:
+        data:
+          githubAppPrivateKey: "{{ .github-app-private-key-pem.Value }}"
+          url: "https://github.com/Viva-con-Agua/"
+          type: "git"
+          githubAppID: "208409"
+          githubAppInstallationID: "26321093"
