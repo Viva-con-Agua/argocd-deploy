@@ -27,7 +27,7 @@ spec:
       secretNamespace: argocd
       template:
         data:
-          githubAppPrivateKey: "{{ .github-app-private-key-pem.Value }}"
+          githubAppPrivateKey: "{{ .github_app_private_key_pem.Value }}"
           url: "https://github.com/Viva-con-Agua/"
           type: "git"
           githubAppID: "208409"
