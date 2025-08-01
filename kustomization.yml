@@ -38,11 +38,6 @@ patches:
       kind: StatefulSet
       name: argocd-application-controller
     path: manifests/imagepullpolicy.patch.yml
-  - target:
-      version: v1
-      kind: Deployment
-      name: argocd-dex-server
-    path: manifests/imagepullpolicy.patch.yml
 
 images:
   - name: quay.io/argoproj/argocd
