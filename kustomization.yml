@@ -42,7 +42,7 @@ patches:
       version: v1
       kind: Deployment
       name: argocd-dex-server
-    path: manifests/imagepullpolicy.patch.yml
+    path: manifests/imagepullpolicy-dex.patch.yml
 
 images:
   - name: quay.io/argoproj/argocd
