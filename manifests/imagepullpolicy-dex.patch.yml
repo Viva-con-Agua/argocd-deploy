@@ -1,0 +1,8 @@
+# Set imgepullpolicy to IfNotPresent
+- op: replace
+  path: /spec/template/spec/containers/0/imagePullPolicy
+  value: IfNotPresent
+# Set imgepullpolicy to IfNotPresent
+- op: replace
+  path: /spec/template/spec/containers/1/imagePullPolicy
+  value: IfNotPresent
