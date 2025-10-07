@@ -45,10 +45,6 @@ patches:
       name: argocd-dex-server
     path: manifests/imagepullpolicy-dex.patch.yml
 
-images:
-  - name: quay.io/argoproj/argocd
-    newName: ghcr.io/ftsell/argocd-kustomize-pass
-
 configMapGenerator:
   - name: argocd-cm
     behavior: merge
