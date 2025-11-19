@@ -13,7 +13,7 @@ spec:
   resyncInterval: 60
   authentication:
     kubernetesAuth:
-      identityId: 6f4af54c-d38f-4ee9-a5db-8980aa5d43d3
+      identityId: 9cc0c259-7cc4-4b1d-8212-fc0faa5f76dc
       autoCreateServiceAccountToken: true
       serviceAccountRef:
         name: infisical-service-account
